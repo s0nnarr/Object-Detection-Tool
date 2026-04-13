@@ -1,10 +1,10 @@
 from ultralytics import YOLO
 
 def main():
-    model = YOLO("yolo26m.pt")
+    model = YOLO("sku_baseline.pt")
     model.train(
-        data="E:/yolo_dataset/data.yaml",
-        epochs=100,
+        data="sku_local.yaml",
+        epochs=8,
         imgsz=640,
         batch=8,
         workers=4

@@ -1,0 +1,8 @@
+
+
+path: E:/sku_110k_dataset/SKU110K_fixed
+train: images/train
+val: images/val
+
+names:
+  0: product

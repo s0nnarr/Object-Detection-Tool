@@ -16,6 +16,7 @@ if __name__ == "__main__":
     torch.cuda.set_per_process_memory_fraction(0.9) # Allow PyTorch to use up to 90% of VRAM.
 
     model = YOLO("best.pt")
+    # model = YOLO("scripts/runs/detect/train10/best.pt")
     model.to("cuda")
     # model.half() -> causes dtype conflict during layer fusion
     print(f"Using device: {'cuda' if torch.cuda.is_available() else 'cpu'}")
