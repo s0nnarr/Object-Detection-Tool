@@ -1,0 +1,14 @@
+names:
+- Chio Cascaval 125g
+- Chio Hula Hoops Cheese 70g
+- Lays Beef Grilled Ribs 125g
+nc: 3
+roboflow:
+  license: Private
+  project: my-first-project-uj5as
+  url: https://app.roboflow.com/stancus-workspace/my-first-project-uj5as/1
+  version: 1
+  workspace: stancus-workspace
+test: ../test/images
+train: ../train/images
+val: ../valid/images
