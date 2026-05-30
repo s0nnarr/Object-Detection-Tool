@@ -1,5 +1,5 @@
 import cv2
-
+#FIXME Currently obsolete class 
 class VideoStream:
     # Class-level variable to hold the singleton instance
     _instance = None
