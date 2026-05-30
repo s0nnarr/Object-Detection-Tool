@@ -41,3 +41,10 @@ def count_by_class(detections: list[dict[str, Any]]) -> dict[str, int]:
 
 
 def decode_jpeg(bytes: bytes) -> Optional[np.ndarray]:
+    n = len(bytes)
+    if n < config.MIN_PAYLOAD_SIZE or n > config.MAX_PAYLOAD_SIZE:
+        return None
+        # Invalid size.
+    if not (bytes[:2] == b"\xff\xd8" and bytes[-2:] == b"\xff\xd9"):
+        return None
+        # Corrupt
