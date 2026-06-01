@@ -1,10 +1,13 @@
-FROM ultralytics/ultralytics:latest
+FROM nvidia/cuda:12.4.1-cudnn-runtime-ubuntu22.04
 
-WORKDIR /scripts
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y python3 python3-pip libgl1 libglib2.0-0 && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /workspace
 COPY requirements.txt .
-RUN pip install roboflow python-dotenv huggingface_hub fastapi uvicorn opencv-python-headless ultralytics
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-COPY scripts/train.py .
-LABEL authors="s0narr"
+COPY app ./app
+ENV PYTHONUNBUFFERED=1
 
-CMD ["python", "train.py"]
+CMD ["uvicorn", "app.server:app", "--host", "0.0.0.0", "--port", "8000"]
