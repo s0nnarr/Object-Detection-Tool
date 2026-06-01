@@ -40,7 +40,7 @@ async def inference_ws(websocket: WebSocket, session_id: str | None = Query(defa
         while True:
             payload_bytes = await websocket.receive_bytes()
             frame_id += 1
-            t0 = time.time()
+            # t0 = time.time()
 
             image = decode_jpeg(payload_bytes)
             if image is None:
@@ -59,7 +59,7 @@ async def inference_ws(websocket: WebSocket, session_id: str | None = Query(defa
                 "detections": detections,
                 "counts": count_by_class(detections)
             }))
-            
+
     except WebSocketDisconnect:
         logger.info(f"Disconnected Websockets. Session ID: {session_id}")
     except Exception as e:

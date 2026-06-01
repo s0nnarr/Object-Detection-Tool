@@ -13,6 +13,7 @@ print(cv2.__version__)
 print("ultralytics imported: ")
 print(ultralytics.__version__)
 
+#FIXME OBSOLETE CODE.
 
 if __name__ == "__main__":
     device = "cpu" # CPU inference by default.
