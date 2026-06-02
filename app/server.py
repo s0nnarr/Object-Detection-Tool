@@ -5,10 +5,9 @@ import time
 import json
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Query
 import numpy as np
-from config import config
-from model import load_model
-from inference import run_inference, count_by_class, decode_jpeg
-
+from app.config import config
+from app.model import load_model
+from app.inference import decode_jpeg, run_inference, count_by_class
 state: dict = {}
 logger = logging.getLogger("server")
 

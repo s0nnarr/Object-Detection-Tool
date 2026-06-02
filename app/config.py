@@ -8,7 +8,7 @@ class Config:
 
     HF_REPO_ID = os.getenv("HF_REPO_ID")
     HF_FILENAME = os.getenv("HF_FILENAME", "best.pt")
-    HF_TOKEN = os.getenv("HF_TOKEN") #HuggingFace client secret. 
+    HF_TOKEN = os.getenv("HF_ACCESS_TOKEN") #HuggingFace client secret.
 
     STANDARD_IMGSZ = int(os.getenv("STANDARD_IMGSZ", "640"))
     HALF = os.getenv("HALF", "true").lower() == "true"
