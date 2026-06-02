@@ -2,7 +2,7 @@ import logging
 from pathlib import Path
 from typing import Optional
 from huggingface_hub import hf_hub_download
-from config import config
+from app.config import config
 from ultralytics import YOLO
 from huggingface_hub import HfApi
 
@@ -40,7 +40,7 @@ def write_revision(revision: Optional[str]) -> None:
 def download_model() -> None:
 
     config.MODEL_DIR.mkdir(parents=True, exist_ok=True)
-    logger.info("Downloading model from Huggingface")
+    logger.info("Downloading model from Huggingface.")
     try:
         download_model = hf_hub_download(repo_id=config.HF_REPO_ID, filename=config.HF_FILENAME, token=config.HF_TOKEN,
                                          local_dir=str(config.MODEL_DIR))
