@@ -17,7 +17,7 @@ def download_dataset() -> str:
     try:
         rf = Roboflow(api_key=os.environ.get("ROBOFLOW_API_KEY"))
         rf_workspace = rf.workspace("stancus-workspace").project("my-first-project-uj5as")
-        dataset = rf_workspace.version(1).download("yolov8") # Downloads the dataset in yolov8 format. Anything above (10, 11, 26) uses the same format as v8.
+        dataset = rf_workspace.version(int(os.environ.get("RF_VERSION", "1"))).download("yolov8") # Downloads the dataset in yolov8 format. Anything above (10, 11, 26) uses the same format as v8.
     except Exception as e:
         logger.error(e)
 
