@@ -8,6 +8,7 @@ import numpy as np
 from app.config import config
 from app.model import load_model
 from app.inference import decode_jpeg, run_inference, count_by_class
+
 state: dict = {}
 logger = logging.getLogger("server")
 
@@ -19,7 +20,7 @@ async def lifespan(app: FastAPI):
     dummy = np.zeros((config.STANDARD_IMGSZ, config.STANDARD_IMGSZ, 3), dtype=np.uint8)
     await asyncio.to_thread(run_inference, state["model"], dummy)
     logger.info("Warmup done. Server ready.")
-    yield()
+    yield
     state.clear()
 
 app = FastAPI(lifespan=lifespan)
@@ -39,7 +40,7 @@ async def inference_ws(websocket: WebSocket, session_id: str | None = Query(defa
         while True:
             payload_bytes = await websocket.receive_bytes()
             frame_id += 1
-            # t0 = time.time()
+            t0 = time.time()
 
             image = decode_jpeg(payload_bytes)
             if image is None:
@@ -52,18 +53,16 @@ async def inference_ws(websocket: WebSocket, session_id: str | None = Query(defa
             async with sem:
                 detections = await asyncio.to_thread(run_inference, model, image)
             await websocket.send_text(json.dumps({
-                "type": "detections",
+                "type": "inference_result",
                 "session_id": session_id,
                 "frame_id": frame_id,
                 "detections": detections,
+                "latency": t0 - time.time(),
                 "counts": count_by_class(detections)
             }))
 
     except WebSocketDisconnect:
         logger.info(f"Disconnected Websockets. Session ID: {session_id}")
-    except Exception as e:
-        logger.exception(f"Websockets error in session ID: {session_id}:", e)
-
     except Exception as e:
         logger.exception("Error occured during inference: ", e)
         try:
